@@ -1,5 +1,10 @@
+#include <vector>
+#include <float.h>
+
 #ifndef PID_H
 #define PID_H
+
+using namespace std;
 
 class PID {
  public:
@@ -26,10 +31,10 @@ class PID {
   void UpdateError(double cte);
 
   /**
-   * Calculate the total PID error.
+ * Calculate the total PID error.
    * @output The total PID error
    */
-  double TotalError();
+  double TotalError(double cte, bool enabledTwiddle);
 
  private:
   /**
@@ -45,6 +50,34 @@ class PID {
   double Kp;
   double Ki;
   double Kd;
+
+  double prev_cte;   // Previous step of cross track error.
+  bool isReset;      // Flag to reset
+
+  /**
+   * Twiddle
+   */
+  double total_error_sqr;
+  double best_error;
+  int pid_index;
+  int steps;
+
+  vector<double> dp;
+
+  enum TwiddleState {
+    Normal = 1,
+    Increase = 2,
+    Decrease = 3
+  };
+  TwiddleState state;
+
+  void NeedTwiddle(double cte);
+  void Twiddle(double cte, double total_err);
+
+  // Helpers
+  void Reset();
+  void PushIndex();
+  void CoefUpdate(int index, double diff);
 };
 
 #endif  // PID_H
