@@ -14,6 +14,8 @@ constexpr double pi() { return M_PI; }
 double deg2rad(double x) { return x * pi() / 180; }
 double rad2deg(double x) { return x * 180 / pi(); }
 
+bool enabledTrottlePID = false;
+
 // Checks if the SocketIO event has JSON data.
 // If there is data the JSON object in string format will be returned,
 // else the empty string "" will be returned.
@@ -34,7 +36,7 @@ int main() {
   uWS::Hub h;
 
   PID steerPID;
-  steerPID.Init(0.132403, 0.000973557, 2.57525);
+  steerPID.Init(0.102403, 0.000673557, 2.57525);
 
   PID speedPID;
   speedPID.Init(0.45, 0.003, 12);
@@ -69,7 +71,7 @@ int main() {
            */
 
           double max_thro = 0.8;
-          double throttle = 0.8 - speedPID.TotalError(fabs(steer_value), false);
+          double throttle = (enabledTrottlePID) ? max_thro - speedPID.TotalError(fabs(steer_value), false) : 0.3;
 
           if (steer_value < -1) {
             steer_value = -1;
@@ -78,7 +80,7 @@ int main() {
           }
 
           // DEBUG
-          //std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
+          std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;
