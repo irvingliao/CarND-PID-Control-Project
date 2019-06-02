@@ -14,13 +14,14 @@ Self-Driving Car Engineer Nanodegree Program
 
 ### Result:
 The final combination I got is:  
-`Kp: 0.132403, Ki: 0.000973557, Kd: 2.57525`  
+Steer: `Kp: 0.102403, Ki: 0.000673557, Kd: 2.57525`  
+Throttle: `Kp: 0.45, Ki: 0.003, Kd: 12`
 
 Here's the video:  
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/dFDW-YsKuU0/0.jpg)](https://www.youtube.com/watch?v=dFDW-YsKuU0)
-
-With Throttle PID Control:
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/dFDW-YsKuU0/0.jpg)](https://www.youtube.com/watch?v=dFDW-YsKuU0)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/kvG30nraJ5o/0.jpg)](https://www.youtube.com/watch?v=kvG30nraJ5o)  
+  
+With Throttle PID Control:  
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Egmqb3yqEPI/0.jpg)](https://www.youtube.com/watch?v=Egmqb3yqEPI)  
 
 ## Dependencies
 

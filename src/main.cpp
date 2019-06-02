@@ -14,7 +14,8 @@ constexpr double pi() { return M_PI; }
 double deg2rad(double x) { return x * pi() / 180; }
 double rad2deg(double x) { return x * 180 / pi(); }
 
-bool enabledTrottlePID = false;
+bool enabledTrottlePID = true;
+bool enabledTwiddle = false;
 
 // Checks if the SocketIO event has JSON data.
 // If there is data the JSON object in string format will be returned,
@@ -62,7 +63,7 @@ int main() {
           double cte = std::stod(j[1]["cte"].get<string>());
           double speed = std::stod(j[1]["speed"].get<string>());
           // double angle = std::stod(j[1]["steering_angle"].get<string>());
-          double steer_value = steerPID.TotalError(cte, false);
+          double steer_value = steerPID.TotalError(cte, enabledTwiddle);
           /**
            * TODO: Calculate steering value here, remember the steering value is
            *   [-1, 1].
