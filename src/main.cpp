@@ -34,7 +34,7 @@ int main() {
   uWS::Hub h;
 
   PID steerPID;
-  steerPID.Init(0.1025, 0.0006, 2.35);
+  steerPID.Init(0.132403, 0.000973557, 2.57525);
 
   PID speedPID;
   speedPID.Init(0.45, 0.003, 12);

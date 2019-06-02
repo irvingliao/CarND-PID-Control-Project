@@ -2,6 +2,25 @@
 Self-Driving Car Engineer Nanodegree Program
 
 ---
+## Overview
+### PID Components
+* Proportional: This component has a direct effect by proportional of error to the output of the controller. It can lead a strong effort of the result and will overshoot the target in both direction. And it will cause oscillations.
+* Integral: This is the sum of errors over time. It helps to reduce and adjust the error oscillation to the target value.
+* Derivative: This component predicts and correct the future error from the previous state. It leads to smoother and more stable steering.
+
+### Hyperparameters Selection
+* Manual Tuning: First, I pick some combination of P, I, D coefficients to quick narrow down the possible range of the coefficients. And I got a roughly range of Kp: ~0.1, Ki: ~0.001, Kd: 1 ~ 5.
+* Twiddle: Implement Twiddle algorithm by the lesson, according to the rough range from manual tuning, I tried several combinations of Kp, Ki, Kd, and set the trajectory length around 500 for the interval of Twiddle udpate. If the car is out of the way and need to restart, I'll just pick whatever combination looks best and smooth in performance and set as initial value and run the Twiddle again.
+
+### Result:
+The final combination I got is:  
+`Kp: 0.132403, Ki: 0.000973557, Kd: 2.57525`  
+
+Here's the video:  
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/dFDW-YsKuU0/0.jpg)](https://www.youtube.com/watch?v=dFDW-YsKuU0)
+
+With Throttle PID Control:
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/dFDW-YsKuU0/0.jpg)](https://www.youtube.com/watch?v=dFDW-YsKuU0)
 
 ## Dependencies
 
