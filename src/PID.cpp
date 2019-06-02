@@ -33,9 +33,9 @@ void PID::Init(double Kp_, double Ki_, double Kd_) {
   pid_index = 0;
   state = Normal;
 
-  dp.push_back(0.125);
-  dp.push_back(0.0001);
-  dp.push_back(0.3);
+  dp.push_back(0.025);
+  dp.push_back(0.0003);
+  dp.push_back(0.25);
 
   //coeff_update = START;
 }
@@ -68,7 +68,7 @@ double PID::TotalError(double cte, bool enabledTwiddle) {
 
 void PID::NeedTwiddle(double cte) {
   steps += 1;
-  if (steps > 500 / 2) {
+  if (steps > 200) {
     total_error_sqr += cte*cte;
   }
   if (steps == 500) {
@@ -121,7 +121,7 @@ void PID::Twiddle(double cte, double total_err) {
   }
 
   Reset();
-  cout << "Kp: " << Kp << ", Ki: " << Ki << ", Kd: " << Kd << endl;
+  cout << "Kp: " << Kp << ", Ki: " << Ki << ", Kd: " << Kd << ", dp: (" << dp[0] << ", " << dp[1] << ", " << dp[2] << ")" << endl;
 }
 
 // Helpers
@@ -140,17 +140,36 @@ void PID::PushIndex() {
 }
 
 void PID::CoefUpdate(int index, double diff) {
+  double n;
   switch (index) {
   case 0:
-    Kp += diff;
+    n = Kp + diff;
+    if (n > 0) {
+      Kp = n;
+    }
+    else {
+      Kp += diff/2;
+    }
     break;
 
   case 1:
-    Ki += diff;
+    n = Ki + diff;
+    if (n > 0) {
+      Ki = n;
+    }
+    else {
+      Ki += diff/2;
+    }
     break;
 
   case 2:
-    Kd += diff;
+    n = Kd + diff;
+    if (n > 0) {
+      Kd = n;
+    }
+    else {
+      Kd += diff/2;
+    }
     break;
 
   default:
